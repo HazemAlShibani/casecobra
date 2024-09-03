@@ -43,6 +43,6 @@ export function constructMetadata({
       creator: '@hazemAlShibani',
     },
     icons,
-    metadataBase: new URL("https://casecobraApp.vercel.app/")
+    metadataBase: new URL("https://casecobra-amber-one.vercel.app/")
   }
 }
