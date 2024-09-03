@@ -48,7 +48,6 @@ export const createCheckoutSession = async ({
     },
   })
 
-  console.log(user.id, configuration.id)
 
   if (existingOrder) {
     order = existingOrder
@@ -118,10 +117,8 @@ export const createCheckoutSession = async ({
   // })
   let id = updatedOrder!.id
 
-  console.log(user!.email!)
-
   await resend.emails.send({
-    from: 'onboarding@resend.dev',
+    from: 'hazem.alshibani03@gmail.com',
     to: [user!.email!],
     subject: 'Thanks for your order!',
     react: OrderReceivedEmail({
