@@ -15,9 +15,11 @@ import { useToast } from '@/components/ui/use-toast'
 import { createCheckoutSession } from './actions'
 import { useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs'
 import LoginModal from '@/components/LoginModal'
+import { unstable_noStore } from 'next/cache'
 
 const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
-const router = useRouter()
+unstable_noStore()
+  const router = useRouter()
 const { toast } = useToast()
 const { user } = useKindeBrowserClient()
 
