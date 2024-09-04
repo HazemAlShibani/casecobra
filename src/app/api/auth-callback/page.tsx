@@ -26,8 +26,8 @@ const Page = () => {
   if (data?.success) {
     if (configId) {
       localStorage.removeItem('configurationId')
-      revalidatePath(`/configure/preview?id=${configId}`)
       router.push(`/configure/preview?id=${configId}`)
+      revalidatePath(`/configure/preview?id=${configId}`)
     } else {
       router.push('/')
     }
