@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { getAuthStatus } from './actions'
 import { useRouter } from 'next/navigation'
 import { Loader2 } from 'lucide-react'
+import { revalidatePath } from 'next/cache'
 
 const Page = () => {
   const [configId, setConfigId] = useState<string | null>(null)
@@ -25,6 +26,7 @@ const Page = () => {
   if (data?.success) {
     if (configId) {
       localStorage.removeItem('configurationId')
+      revalidatePath(`/configure/preview?id=${configId}`)
       router.push(`/configure/preview?id=${configId}`)
     } else {
       router.push('/')
