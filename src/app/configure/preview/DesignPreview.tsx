@@ -17,11 +17,11 @@ import { useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs'
 import LoginModal from '@/components/LoginModal'
 import { unstable_noStore } from 'next/cache'
 
-const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
+const DesignPreview = ({ configuration } : { configuration: Configuration }) => {
 unstable_noStore()
   const router = useRouter()
 const { toast } = useToast()
-const { user } = useKindeBrowserClient()
+const { isAuthenticated } = useKindeBrowserClient()
 
 const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false)
 
@@ -59,8 +59,8 @@ const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false)
   })
 
   const handleCheckout = () => {
-      console.log(user)
-    if (user) {
+      console.log(isAuthenticated, "isAuthenticated")
+    if (isAuthenticated) {
       // create payment session
       createPaymentSession({ configId: id })
     } else {
