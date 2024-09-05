@@ -30,7 +30,7 @@ const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false)
   
   useEffect(() =>{
     setShowConfetti(true)
-    checkIfAuth()
+    // checkIfAuth()
     console.log("Try!!!!!!!!!!!!!!!")
   }, [])
 
@@ -64,17 +64,17 @@ const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false)
     },
   })
 
-  const { mutate: checkIfAuth, data } = useMutation({
-    mutationKey: ['get-checkIfAuth-session'],
-    mutationFn:  async () => await CheckIfAuth(),
-  })
-
-  // const { data } = useQuery({
-  //   queryKey: ['get-checkIfAuth-session'],
-  //   queryFn: async () => await CheckIfAuth(),
-  //   retry: 15,
-  //   retryDelay: 500,
+  // const { mutate: checkIfAuth, data } = useMutation({
+  //   mutationKey: ['get-checkIfAuth-session'],
+  //   mutationFn:  async () => await CheckIfAuth(),
   // })
+
+  const { data } = useQuery({
+    queryKey: ['get-checkIfAuth-session'],
+    queryFn: async () => await CheckIfAuth(),
+    retry: 15,
+    retryDelay: 500,
+  })
 
   const handleCheckout = () => {
     // checkIfAuth()

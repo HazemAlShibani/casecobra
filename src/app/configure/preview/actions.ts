@@ -141,7 +141,7 @@ export const CheckIfAuth = async () => {
   const user = await getUser()
 
   if (!user) {
-    return false
+    return new Error("ffff")
   }
   return true
 }
