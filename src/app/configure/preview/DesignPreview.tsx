@@ -31,6 +31,7 @@ const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false)
   useEffect(() =>{
     setShowConfetti(true)
     checkIfAuth()
+    console.log("Try!!!!!!!!!!!!!!!")
   }, [])
 
   const {id, color, model, finish, material } = configuration
@@ -65,7 +66,7 @@ const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false)
 
   const { mutate: checkIfAuth, data } = useMutation({
     mutationKey: ['get-checkIfAuth-session'],
-    mutationFn:  CheckIfAuth,
+    mutationFn:  async () => await CheckIfAuth(),
   })
 
   // const { data } = useQuery({
