@@ -76,7 +76,7 @@ const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false)
   // })
 
   const handleCheckout = () => {
-    console.log(data, "data")
+    console.log(data, "dattttta")
     if (data) {
       // create payment session
       createPaymentSession({ configId: id })
