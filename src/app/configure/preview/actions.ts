@@ -135,3 +135,13 @@ export const createCheckoutSession = async ({
   return { url: `${process.env.NEXT_PUBLIC_SERVER_URL}/thank-you?orderId=${order.id}` }
   // return { url: stripeSession.url }
 }
+
+export const CheckIfAuth = async () => {
+  const { getUser } = getKindeServerSession()
+  const user = await getUser()
+
+  if (!user) {
+    return false
+  }
+  return true
+}

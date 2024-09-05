@@ -6,30 +6,28 @@ import { BASE_PRICE, PRODUCT_PRICES } from '@/config/products'
 import { cn, formatPrice } from '@/lib/utils'
 import { COLORS, FINISHES, MODELS } from '@/validators/option-validator'
 import { Configuration } from '@prisma/client'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { ArrowRight, Check } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import Confetti from 'react-dom-confetti'
 import { useRouter } from 'next/navigation'
 import { useToast } from '@/components/ui/use-toast'
 import { createCheckoutSession } from './actions'
+import { CheckIfAuth } from './actions'
 import { useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs'
 import LoginModal from '@/components/LoginModal'
 import { unstable_noStore } from 'next/cache'
 
-export const revalidate = 5
 
 const DesignPreview = ({ configuration } : { configuration: Configuration }) => {
-unstable_noStore()
   const router = useRouter()
-const { toast } = useToast()
-const { isAuthenticated } = useKindeBrowserClient()
+  const { toast } = useToast()
 
 const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false)
 
   const [showConfetti, setShowConfetti] = useState<boolean>(false)
   
-  useEffect(() => setShowConfetti(true), [isAuthenticated])
+  useEffect(() =>setShowConfetti(true), [])
 
   const {id, color, model, finish, material } = configuration
 
@@ -61,9 +59,21 @@ const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false)
     },
   })
 
+  // const { mutate: checkIfAuth, data } = useMutation({
+  //   mutationKey: ['get-checkIfAuth-session'],
+  //   mutationFn:  CheckIfAuth,
+  // })
+
+  const { data } = useQuery({
+    queryKey: ['get-checkIfAuth-session'],
+    queryFn: CheckIfAuth,
+    retry: 10,
+    retryDelay: 500,
+  })
+
   const handleCheckout = () => {
-      console.log(isAuthenticated, "isAuthenticated")
-    if (isAuthenticated) {
+    console.log(data, "data")
+    if (data) {
       // create payment session
       createPaymentSession({ configId: id })
     } else {
