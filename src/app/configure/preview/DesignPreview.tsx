@@ -17,6 +17,8 @@ import { useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs'
 import LoginModal from '@/components/LoginModal'
 import { unstable_noStore } from 'next/cache'
 
+export const revalidate = 5
+
 const DesignPreview = ({ configuration } : { configuration: Configuration }) => {
 unstable_noStore()
   const router = useRouter()
@@ -26,7 +28,8 @@ const { isAuthenticated } = useKindeBrowserClient()
 const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false)
 
   const [showConfetti, setShowConfetti] = useState<boolean>(false)
-  useEffect(() => setShowConfetti(true), [])
+  
+  useEffect(() => setShowConfetti(true), [isAuthenticated])
 
   const {id, color, model, finish, material } = configuration
 
