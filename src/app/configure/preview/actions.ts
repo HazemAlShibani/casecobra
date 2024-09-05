@@ -143,6 +143,5 @@ export const CheckIfAuth = async () => {
   if (!user?.id || !user.email) {
     throw new Error('Invalid user data')
   }
-  
-  return true
+  return { success: true }
 }
