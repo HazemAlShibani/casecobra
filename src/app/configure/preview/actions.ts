@@ -140,8 +140,9 @@ export const CheckIfAuth = async () => {
   const { getUser } = getKindeServerSession()
   const user = await getUser()
 
-  if (!user) {
-    return new Error("ffff")
+  if (!user?.id || !user.email) {
+    throw new Error('Invalid user data')
   }
+  
   return true
 }
