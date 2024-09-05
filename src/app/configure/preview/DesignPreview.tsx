@@ -71,13 +71,13 @@ const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false)
   const { data } = useQuery({
     queryKey: ['get-checkIfAuth-session'],
     queryFn: async () => await CheckIfAuth(),
-    retry: 5,
+    retry: 15,
     retryDelay: 500,
   })
 
   const handleCheckout = () => {
     // checkIfAuth()
-    console.log(data, "dattttta")
+    console.log(data, "dattttta eee")
     if (data) {
       // create payment session
       createPaymentSession({ configId: id })

@@ -137,10 +137,10 @@ export const createCheckoutSession = async ({
 }
 
 export const CheckIfAuth = async () => {
-  const { getUser } = getKindeServerSession()
-  const user = await getUser()
+  const { isAuthenticated } = getKindeServerSession()
+  // const user = await getUser()
 
-  if (!user) {
+  if (!isAuthenticated) {
     throw new Error("yes that is it!")
   }
   return true
