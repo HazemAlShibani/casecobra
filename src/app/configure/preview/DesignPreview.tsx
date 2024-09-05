@@ -71,7 +71,7 @@ const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false)
   const { data } = useQuery({
     queryKey: ['get-checkIfAuth-session'],
     queryFn: async () => await CheckIfAuth(),
-    retry: true,
+    retry: 5,
     retryDelay: 500,
   })
 
