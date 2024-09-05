@@ -30,8 +30,7 @@ const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false)
   
   useEffect(() =>{
     setShowConfetti(true)
-    checkIfAuth()
-    console.log("Try!!!!!!!!!!!!!!!")
+    // console.log("Try!!!!!!!!!!!!!!!")
   }, [])
 
   const {id, color, model, finish, material } = configuration
@@ -64,19 +63,20 @@ const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false)
     },
   })
 
-  const { mutate: checkIfAuth, data } = useMutation({
-    mutationKey: ['get-checkIfAuth-session'],
-    mutationFn:  async () => await CheckIfAuth(),
-  })
-
-  // const { data } = useQuery({
-  //   queryKey: ['get-checkIfAuth-session'],
-  //   queryFn: CheckIfAuth,
-  //   retry: true,
-  //   retryDelay: 500,
+  // const { mutate: checkIfAuth, data } = useMutation({
+  //   mutationKey: ['get-checkIfAuth-session'],
+  //   mutationFn:  async () => await CheckIfAuth(),
   // })
 
+  const { data } = useQuery({
+    queryKey: ['get-checkIfAuth-session'],
+    queryFn: async () => await CheckIfAuth(),
+    retry: 10,
+    retryDelay: 500,
+  })
+
   const handleCheckout = () => {
+    // checkIfAuth()
     console.log(data, "dattttta")
     if (data) {
       // create payment session
