@@ -20,6 +20,7 @@ import { unstable_noStore } from 'next/cache'
 
 
 const DesignPreview = ({ configuration } : { configuration: Configuration }) => {
+  unstable_noStore()
   const router = useRouter()
   const { toast } = useToast()
 
@@ -67,7 +68,7 @@ const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false)
   const { data } = useQuery({
     queryKey: ['get-checkIfAuth-session'],
     queryFn: CheckIfAuth,
-    retry: 10,
+    retry: true,
     retryDelay: 500,
   })
 
