@@ -17,6 +17,7 @@ import { CheckIfAuth } from './actions'
 import { useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs'
 import LoginModal from '@/components/LoginModal'
 import { unstable_noStore } from 'next/cache'
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 
 
 const DesignPreview = ({ configuration } : { configuration: Configuration }) => {
@@ -32,9 +33,20 @@ const DesignPreview = ({ configuration } : { configuration: Configuration }) => 
 
   useEffect(() =>{
     setShowConfetti(true)
-    setIsAuth(isAuthenticated)
-    console.log(isAuthenticated ,"Try!!!!!!!!!!!!!!!")
-  }, [isAuthenticated])
+    const rr = async () => {
+      "use server"
+      const { getUser } = getKindeServerSession()
+      const user = await getUser()
+
+      if(!user) {
+        setIsAuth(false)
+      } else {
+        setIsAuth(true)
+      }
+    }
+    rr()
+    console.log(isAuth ,"Try!!!!!!!!!!!!!!!")
+  })
 
   const {id, color, model, finish, material } = configuration
 
@@ -80,7 +92,7 @@ const DesignPreview = ({ configuration } : { configuration: Configuration }) => 
 
   const handleCheckout = () => {
     // checkIfAuth()
-    console.log(isAuth, "dattttta qqwqw")
+    console.log(isAuth, "aa")
     if (isAuth) {
       // create payment session
       createPaymentSession({ configId: id })
