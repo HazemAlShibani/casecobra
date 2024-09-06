@@ -34,7 +34,6 @@ const DesignPreview = ({ configuration } : { configuration: Configuration }) => 
   useEffect(() =>{
     setShowConfetti(true)
     const rr = async () => {
-      "use server"
       const { getUser } = getKindeServerSession()
       const user = await getUser()
 
