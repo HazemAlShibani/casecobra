@@ -13,41 +13,24 @@ import Confetti from 'react-dom-confetti'
 import { useRouter } from 'next/navigation'
 import { useToast } from '@/components/ui/use-toast'
 import { createCheckoutSession } from './actions'
-import { CheckIfAuth } from './actions'
 import { useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs'
 import LoginModal from '@/components/LoginModal'
-import { unstable_noStore } from 'next/cache'
-import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 
 
 const DesignPreview = ({ configuration } : { configuration: Configuration }) => {
-  unstable_noStore()
   const router = useRouter()
   const { toast } = useToast()
-
-  const [isAuth, setIsAuth] = useState<boolean | null>(false)
+  const { id } = configuration
+  const { user } = useKindeBrowserClient()
   const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false)
   const [showConfetti, setShowConfetti] = useState<boolean>(false)
   
-  const { isAuthenticated } = useKindeBrowserClient()
-
   useEffect(() =>{
     setShowConfetti(true)
-    const rr = async () => {
-      const { getUser } = getKindeServerSession()
-      const user = await getUser()
+    console.log("Try!!!!!!!!!!!!!!!")
+  }, [])
 
-      if(!user) {
-        setIsAuth(false)
-      } else {
-        setIsAuth(true)
-      }
-    }
-    rr()
-    console.log(isAuth ,"Try!!!!!!!!!!!!!!!")
-  })
-
-  const {id, color, model, finish, material } = configuration
+  const {color, model, finish, material } = configuration
 
   const tw = COLORS.find((supportedColor) => supportedColor.value === color)?.tw
 
@@ -91,8 +74,8 @@ const DesignPreview = ({ configuration } : { configuration: Configuration }) => 
 
   const handleCheckout = () => {
     // checkIfAuth()
-    console.log(isAuth, "aa")
-    if (isAuth) {
+    console.log(user, "dattttta qqwqw")
+    if (user) {
       // create payment session
       createPaymentSession({ configId: id })
     } else {
@@ -195,7 +178,7 @@ const DesignPreview = ({ configuration } : { configuration: Configuration }) => 
 
             <div className='mt-8 flex justify-end pb-12'>
               <Button
-                onClick={handleCheckout}
+                onClick={() => handleCheckout()}
                 className='px-4 sm:px-6 lg:px-8'>
                 Check out <ArrowRight className='h-4 w-4 ml-1.5 inline' />
               </Button>
