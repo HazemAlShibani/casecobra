@@ -24,15 +24,17 @@ const DesignPreview = ({ configuration } : { configuration: Configuration }) => 
   const router = useRouter()
   const { toast } = useToast()
 
-const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false)
-
+  const [isAuth, setIsAuth] = useState<boolean | null>(false)
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false)
   const [showConfetti, setShowConfetti] = useState<boolean>(false)
   
+  const { isAuthenticated } = useKindeBrowserClient()
+
   useEffect(() =>{
     setShowConfetti(true)
-    // checkIfAuth()
-    console.log("Try!!!!!!!!!!!!!!!")
-  }, [])
+    setIsAuth(isAuthenticated)
+    console.log(isAuthenticated ,"Try!!!!!!!!!!!!!!!")
+  }, [isAuthenticated])
 
   const {id, color, model, finish, material } = configuration
 
@@ -69,17 +71,17 @@ const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false)
   //   mutationFn:  async () => await CheckIfAuth(),
   // })
 
-  const { data } = useQuery({
-    queryKey: ['get-checkIfAuth-session'],
-    queryFn: async () => await CheckIfAuth(),
-    retry: 15,
-    retryDelay: 500,
-  })
+  // const { data } = useQuery({
+  //   queryKey: ['get-checkIfAuth-session'],
+  //   queryFn: async () => await CheckIfAuth(),
+  //   retry: 15,
+  //   retryDelay: 500,
+  // })
 
   const handleCheckout = () => {
     // checkIfAuth()
-    console.log(data?.success, "dattttta qqwqw")
-    if (data?.success) {
+    console.log(isAuth, "dattttta qqwqw")
+    if (isAuth) {
       // create payment session
       createPaymentSession({ configId: id })
     } else {
