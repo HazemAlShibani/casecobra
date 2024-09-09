@@ -48,7 +48,6 @@ export const createCheckoutSession = async ({
     },
   })
 
-
   if (existingOrder) {
     order = existingOrder
   } else {
@@ -89,49 +88,49 @@ export const createCheckoutSession = async ({
     },
   })
 
-  // const product = await stripe.products.create({
-  //   name: 'Custom iPhone Case',
-  //   images: [configuration.imageURL],
-  //   default_price_data: {
-  //     currency: 'USD',
-  //     unit_amount: price,
-  //   },
-  // })
-
-  // const stripeSession = await stripe.checkout.sessions.create({
-  //   success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/thank-you?orderId=${order.id}`,
-  //   cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/configure/preview?id=${configuration.id}`,
-  //   payment_method_types: ['card', 'paypal'],
-  //   mode: 'payment',
-  //   shipping_address_collection: { allowed_countries: ['DE', 'US','NE'] },
-  //   /*
-  //   We need to know here after the product is payed is
-  //   whom does this and which the order is payed 
-  //    */
-  //   metadata: {
-  //     userId: user.id,
-  //     orderId: order.id,
-  //   },
-    
-  //   line_items: [{ price: product.default_price as string, quantity: 1 }],
-  // })
-  let id = updatedOrder!.id
-
-  await resend.emails.send({
-    from: 'hazem.alshibani03@gmail.com',
-    to: [user!.email!],
-    subject: 'Thanks for your order!',
-    react: OrderReceivedEmail({
-      id,
-      orderDate: updatedOrder.createdAt.toLocaleDateString(),
-      //@ts-ignore
-      shippingAddress: {
-        ...information
-      },
-    }),
+  const product = await stripe.products.create({
+    name: 'Custom iPhone Case',
+    images: [configuration.imageURL],
+    default_price_data: {
+      currency: 'USD',
+      unit_amount: price,
+    },
   })
 
+  const stripeSession = await stripe.checkout.sessions.create({
+    success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/thank-you?orderId=${order.id}`,
+    cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/configure/preview?id=${configuration.id}`,
+    payment_method_types: ['card', 'paypal'],
+    mode: 'payment',
+    shipping_address_collection: { allowed_countries: ['DE', 'US','NE'] },
+    /*
+    We need to know here after the product is payed is
+    whom does this and which the order is payed 
+     */
+    metadata: {
+      userId: user.id,
+      orderId: order.id,
+    },
+    
+    line_items: [{ price: product.default_price as string, quantity: 1 }],
+  })
+  
+  // let id = updatedOrder!.id
+  // await resend.emails.send({
+  //   from: 'hazem.alshibani03@gmail.com',
+  //   to: [user!.email!],
+  //   subject: 'Thanks for your order!',
+  //   react: OrderReceivedEmail({
+  //     id,
+  //     orderDate: updatedOrder.createdAt.toLocaleDateString(),
+  //     //@ts-ignore
+  //     shippingAddress: {
+  //       ...information
+  //     },
+  //   }),
+  // })
 
-  return { url: `${process.env.NEXT_PUBLIC_SERVER_URL}/thank-you?orderId=${order.id}` }
-  // return { url: stripeSession.url }
+
+  // return { url: `${process.env.NEXT_PUBLIC_SERVER_URL}/thank-you?orderId=${order.id}` }
+  return { url: stripeSession.url }
 }
