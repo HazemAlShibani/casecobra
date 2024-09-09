@@ -1,14 +1,14 @@
 'use server'
 
-import OrderReceivedEmail from '@/components/email/OrderReceivedEmail'
 import { BASE_PRICE, PRODUCT_PRICES } from '@/config/products'
 import { db } from '@/db'
 import { stripe } from '@/lib/stripe'
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 import { Order } from '@prisma/client'
-import { Resend } from "resend"
 
-const resend = new Resend(process.env.RESEND_EMAIL_KEY) 
+// import { Resend } from "resend"
+// import OrderReceivedEmail from '@/components/email/OrderReceivedEmail'
+// const resend = new Resend(process.env.RESEND_EMAIL_KEY) 
 
 export const createCheckoutSession = async ({
   configId,
