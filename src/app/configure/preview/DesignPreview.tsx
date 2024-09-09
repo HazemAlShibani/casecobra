@@ -24,7 +24,7 @@ const DesignPreview = ({ configuration } : { configuration: Configuration }) => 
   const [showConfetti, setShowConfetti] = useState<boolean>(false)
   
   const [authStatus, setAuthStatus] = useState(null);
-
+  
   useEffect(() => {
     console.log("Try!!!!!!!!!!!!!!!")
     setShowConfetti(true)
@@ -69,7 +69,7 @@ const DesignPreview = ({ configuration } : { configuration: Configuration }) => 
 
   const handleCheckout = () => {
     console.log(authStatus, "Sosos a")
-    if (true) {
+    if (authStatus) {
       // create payment session
       createPaymentSession({ configId: id })
     } else {
