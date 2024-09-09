@@ -7,10 +7,13 @@ const nextConfig = {
     return [
       {
         // matching all API routes
-        source: "/:path*",
+        source: "/api/:path*",
         headers: [
           { key: "Access-Control-Allow-Credentials", value: "true" },
-          { key: "Access-Control-Allow-Origin", value: "*" }, // replace this your actual origin
+          {
+            key: "Access-Control-Allow-Origin",
+            value: "https://casecobra-amber-one.vercel.app",
+          }, // replace this your actual origin
           {
             key: "Access-Control-Allow-Methods",
             value: "GET,DELETE,PATCH,POST,PUT",
