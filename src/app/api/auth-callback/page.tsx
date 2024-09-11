@@ -3,7 +3,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { getAuthStatus } from './actions'
-import { redirect, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { Loader2 } from 'lucide-react'
 
 const Page = () => {
@@ -25,7 +25,7 @@ const Page = () => {
   if (data?.success) {
     if (configId) {
       localStorage.removeItem('configurationId')
-      redirect(`/configure/preview?id=${configId}`)
+      router.push(`/configure/preview?id=${configId}`)
     } else {
       router.push('/')
     }
