@@ -29,7 +29,7 @@ const DesignPreview = ({ configuration } : { configuration: Configuration }) => 
     console.log("Try!!!!!!!!!!!!!!!")
     setShowConfetti(true)
     const getKindeSession = async () => {
-      const res = await fetch("/src/app/kindeSession");
+      const res = await fetch("/api/kindeSession");
       const data = await res.json();
       setAuthStatus(data.authenticated);
     };
