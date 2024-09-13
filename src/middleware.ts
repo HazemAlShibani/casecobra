@@ -7,7 +7,7 @@ export const corsHeaders = {
 }
 
 export function middleware(request: Request) {
-  if (request.method === 'OPTIONS') {
+  if (request.method === 'GET') {
     return NextResponse.json({}, { headers: corsHeaders })
   }
 }
