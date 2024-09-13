@@ -1,17 +1,17 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server'
 
-export function middleware() {
-    // retrieve the current response
-    const res = NextResponse.next()
+export const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+}
 
-    // // add the CORS headers to the response
-    // res.headers.append('Access-Control-Allow-Credentials', "true")
-    // res.headers.append('Access-Control-Allow-Origin', '*') // replace this your actual origin
-    // res.headers.append('Access-Control-Allow-Methods', 'GET,DELETE,PATCH,POST,PUT')
-    // res.headers.append(
-    //     'Access-Control-Allow-Headers',
-    //     'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-    // )
+export function middleware(request: Request) {
+  if (request.method === 'OPTIONS') {
+    return NextResponse.json({}, { headers: corsHeaders })
+  }
+}
 
-    return res
+export const config = {
+  matcher: '/api/:path*',
 }
